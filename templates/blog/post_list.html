@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <div class="row my-3">
-        <div class="col-9">
+        <div class="col-8">
             <!-- 블로그 영역 -->
             {% if post_list %}
                 {% for post in post_list %}
@@ -17,7 +17,7 @@
                         {% endif %}
                             / {{ post.author }}</b> <small>({{ post.pub_date }})</small>
                     <hr>
-                    <div>
+                    <div class="card">
                     {% if post.photo %}
                        <img src="{{ post.photo.url }}" >
                     {% endif %}
@@ -29,7 +29,7 @@
                 <p>포스트가 없습니다.</p>
             {% endif %}
         </div>
-        <div class="col-3">
+        <div class="col-4">
              <!-- 검색 영역 -->
             <div class="card my-5">
                 <div class="card-header">Search</div>
