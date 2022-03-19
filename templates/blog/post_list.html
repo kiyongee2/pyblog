@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block title %}Blog - 전체 보기{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row my-3">
+        <div class="col-9">
+            <!-- 블로그 영역 -->
+            {% if post_list %}
+                {% for post in post_list %}
+                    <h3 class="mt-4">
+                        <a href="{% url 'blog:detail' post.id %}" class="text-decoration-none">
+                            {{ post.title }}
+                        </a>
+                    </h3>
+                        {% if post.category %}
+                           | <b>{{ post.category }}</b>
+                        {% endif %}
+                            / {{ post.author }}</b> <small>({{ post.pub_date }})</small>
+                    <hr>
+                    <div>
+                    {% if post.photo %}
+                       <img src="{{ post.photo.url }}" >
+                    {% endif %}
+                    </div>
+                    <p >{{ post.content | linebreaks }}</p>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p>포스트가 없습니다.</p>
+            {% endif %}
+        </div>
+        <div class="col-3">
+             <!-- 검색 영역 -->
+            <div class="card my-5">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" class="kw form-control" value="{{ kw|default_if_none:'' }}">
+                        <button type="button" id="btn_search" class="btn btn-primary">찾기</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 카테고리 영역 -->
+            <div class="card mb-4">
+                <div class="card-header">분류(Categories)</div>
+                <div class="card-body">
+                    {% for category in categories %}
+                    <ul>
+                        <li>
+                            <a href="{{ category.get_absolute_url }}" class="text-decoration-none">
+                                {{ category }}({{ category.post_set.count }})
+                            </a>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- 페이징 처리 및 search 영역 -->
+        <ul class="pagination justify-content-center">
+            <!-- 이전 페이지 -->
+            {% if post_list.has_previous %}
+            <li class="page-item">
+                <a href="?page={{ post_list.previous_page_number }}" class="page-link" >이전</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a href="#" class="page-link">이전</a>
+            </li>
+            {% endif %}
+            <!-- 페이지 리스트 -->
+            {% for page_number in post_list.paginator.page_range %}
+                {% if page_number == post_list.number %}
+                <li class="page-item active">
+                    <a href="#" data-page="{{ page_number }}" class="page-link">
+                        {{ page_number }}
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a href="#" data-page="{{ page_number }}" class="page-link">
+                        {{ page_number }}
+                    </a>
+                </li>
+                {% endif %}
+            {% endfor %}
+            <!-- 다음 페이지 -->
+            {% if post_list.has_next %}
+            <li class="page-item">
+                <a href="?page={{ post_list.next_page_number }}" class="page-link">다음</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a href="#" class="page-link">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+        <!-- 검색 폼 -->
+        <form action="" method="get" id="searchForm">
+            <input type="hidden" id="kw" name="kw">
+            <input type="hidden" id="page" name="page">
+        </form>
+    </div>
+</div>>
+{% endblock %}
+{% block script %}
+<script>
+    $(function(){
+        //페이지 처리
+        $('.page-link').click(function(){
+            $('#page').val($(this).data('page'));
+            $('#searchForm').submit();
+        });
+
+        //검색 처리
+        $('#btn_search').click(function(){
+            $('#kw').val($('.kw').val());
+            $('#page').val(1);
+            $('#searchForm').submit();
+        });
+    });
+</script>
+{% endblock %}

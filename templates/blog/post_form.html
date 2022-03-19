@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %} Blog - 글쓰기 {% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row mt-4 px-5">
+        <div class="col-8">
+            <h2>Create New Post</h2>
+            <hr>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% include 'form_errors.html' %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+</div>
+{% endblock %}
+<!--
+    <p>
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title">
+    </p>
+    <p>
+        <label for="content">내용</label>
+        <textarea id="content" name="content" rows="10" cols="60"></textarea>
+    </p>
+    <p>
+        <label for="photo">사진</label>
+        <input type="file" id="photo" name="photo">
+    </p>
+    <p>
+        <label for="category">카테고리</label>
+        <select id="category" name="name">
+            <option value="none">------</option>
+            <option value="program">프로그래밍</option>
+            <option value="life">라이프스타일</option>
+            <option value="culture">문화&예술</option>
+        </select>
+    </p>
+-->

@@ -1,0 +1,10 @@
+body{ padding-top: 60px; }
+.form-group{margin: 10px 0;}
+.form-group label{margin: 5px 0;}
+
+.comment{
+    border-top: 1px dotted #ccc;
+    font-size:0.9em;
+    padding-bottom:10px;
+}
+.profile ul li{margin:10px;}

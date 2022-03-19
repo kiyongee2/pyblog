@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %} Blog - {{ post.title }} {% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row my-3">
+        <div class="col-8">
+            <h3 class="my-3">{{ post.title }}</h3>
+            {% if post.category %}
+               | <b>{{ post.category }}</b>
+            {% endif %}
+                / {{ post.author }}</b> <small>({{ post.pub_date }})</small>
+            {% if post.modify_date %}
+                (수정일 : {{ post.modify_date }})
+            {% endif %}
+            &nbsp;&nbsp;<a href="{% url 'blog:postlist' %}">목록</a>
+            {% if request.user == post.author %}
+                <a href="{% url 'blog:post_modify' post.id %}">수정</a>
+                <a href="{% url 'blog:post_delete' post.id %}"
+                  onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
+            {% endif %}
+            <hr>
+            {% if post.photo %}
+               <img src="{{ post.photo.url }}" >
+            {% endif %}
+            <p>{{ post.content | linebreaks }}</p>
+            {% if post.file %}
+                <p><a href="{{ post.file.url }}">
+                    Download : <i class="far fa-file"></i>
+                </a></p>
+            {% endif %}
+            <div >
+                <!--댓글 내용 출력-->
+                {% for comment in post.comment_set.all %}
+                <div class="comment">
+                     {{ comment.content | linebreaks }}
+                    - {{ comment.author }}, {{ comment.pub_date }}
+                    {% if request.user == comment.author %}
+                    <a href="{% url 'blog:comment_modify' comment.id %}" >수정</a>
+                    <a href="#" class="delete"
+                       data-uri="{% url 'blog:comment_delete' comment.id %}">삭제</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <p>
+                    <a href="{% url 'blog:comment_create' post.id %}">댓글 추가..</a>
+                </p>
+            </div>
+        </div>
+        <div class="col-4">
+             <!-- 검색 영역 -->
+            <div class="card my-5">
+                <div class="card-header">Search</div>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" class="kw form-control" value="{{ kw|default_if_none:'' }}">
+                        <button type="button" id="btn_search" class="btn btn-primary">찾기</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 카테고리 영역 -->
+            <div class="card mb-4">
+                <div class="card-header">분류(Categories)</div>
+                <div class="card-body">
+                    {% for category in categories %}
+                    <ul>
+                        <li>
+                            <a href="{{ category.get_absolute_url }}" class="text-decoration-none">
+                                {{ category }}({{ category.post_set.count }})
+                            </a>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $(function(){
+        $('.delete').click(function(){
+            if(confirm('정말로 삭제하겠습니까?')){
+                location.href = $(this).data('uri');
+            }
+        });
+    });
+
+</script>
+{% endblock %}

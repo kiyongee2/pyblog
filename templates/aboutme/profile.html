@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row my-4 px-5">
+        <div class="col-8 profile">
+        <h4>긍정 에너지 <em>Software Engineer</em> 김기용입니다.</h4>
+            <div class="card my-4">
+              <div class="row">
+                <div class="col-3">
+                  <img src="{% static 'aboutme/images/giyong0.jpg' %}"
+                       class="img-fluid rounded-start" alt="증명사진">
+                </div>
+                <div class="col-9">
+                  <div class="card-body">
+                    <h5 class="card-title">profile</h5>
+                    <p class="card-text my-3">
+                        - 사는 곳 : 서울시 은평구 불광동<br>
+                        - 하는 일 : 파이썬, 자바 기반 웹 프로그래밍 강의 및 웹 사이트 제작
+                    </p>
+                    <p class="card-text">
+                        <small>
+                            <a href="https://github.com/kiyongee2" class="text-decoration-none">
+                            깃허브 | https://github.com/sugu2100</a>
+                        </small><br>
+                        <small>
+                            <a href="https://blog.naver.com/sugu2000kr" class="text-decoration-none">
+                                Blog | https://blog.naver.com/sugu2000kr</a>
+                        </small>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <h5 class="mt-4">Career & Education</h5>
+        <hr>
+        <ul>
+            <li>(현)에듀윌 국비교육원 : 파이썬 기반 Web 개발자 양성 강의</li>
+            <li>(전)메가패스 더조은컴퓨터 : C, Java, Python 프로그래밍 입문 강의</li>
+            <li>(전)JMP 코리아 : 자바 Web 실무 일본 취업 강의</li>
+            <li>(전)한글과 컴퓨터(한컴 에듀넷) : 웹 사이트 관리 및 전산 교육</li>
+            <li>서울시립대학교 도시행정학과</li>
+            <li>한국방송통신대학교 컴퓨터과학과</li>
+            <li>정보처리기사</li>
+        </ul>
+        <h5 class="mt-4">Skills & Portfolio</h5>
+        <hr>
+        <ul>
+            <li>
+                <a href="http://giyong2.pythonanywhere.com" class="text-decoration-none">
+                    Blog 사이트 - by Python Django
+                </a>
+            </li>
+            <li>
+                <a href="http://giyong2.cafe24.com" class="text-decoration-none">
+                    회원 관리형 게시판 - by Java JSP
+                </a>
+            </li>
+            <li>Backend | Python, Java</li>
+            <li>Front | HTML, CSS, JavaScript</li>
+            <li>SQL | Oracle, MySQL, Sqlite3</li>
+            <li>IOT | 아두이노, 라즈베리파이</li>
+        </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
